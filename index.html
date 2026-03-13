@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>lycka | 健やかな体と、心豊かな日常を。</title>
+  <meta name="description" content="lycka（リッカ）は水素風呂事業・Web制作・ポーセラーツサロン・食育事業を展開する宮城県富谷市の事業者です。" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS Reset & Base
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      color: #334155;
+      background: #ffffff;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* =============================================
+       Utility
+    ============================================= */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-title {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-title h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: #1e293b;
+      margin-bottom: 16px;
+    }
+    .section-title .divider {
+      width: 40px;
+      height: 1px;
+      background: #93c5fd;
+      margin: 0 auto 14px;
+    }
+    .section-title .subtitle {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    /* =============================================
+       Navigation
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 24px 0;
+      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
+    }
+    #nav.scrolled {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 0;
+      box-shadow: 0 1px 16px rgba(0,0,0,0.06);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: #1e3a5f;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #475569;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #3b82f6; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: #334155;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      padding: 32px 24px;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #334155;
+    }
+
+    /* =============================================
+       Hero
+    ============================================= */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      transform: scale(1.06);
+      animation: heroZoom 12s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.06); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(239,246,255,0.4) 0%, rgba(255,255,255,0.7) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      color: #0f172a;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 1.6s ease-out 0.3s forwards;
+    }
+    .hero-subtitle {
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: #475569;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 1.6s ease-out 0.8s forwards;
+    }
+    .hero-scroll {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, #93c5fd, transparent);
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 1.6s ease-out 1.2s forwards, scrollBounce 2.5s ease-in-out 2s infinite;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(12px); }
+    }
+
+    /* =============================================
+       About
+    ============================================= */
+    #about {
+      padding: 100px 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #60a5fa;
+      margin-bottom: 16px;
+    }
+    .about-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+    .about-name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: #94a3b8;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      margin-left: 12px;
+    }
+    .about-divider {
+      width: 56px;
+      height: 1px;
+      background: #bfdbfe;
+      margin: 28px auto 40px;
+    }
+    .about-text {
+      font-size: 1rem;
+      color: #475569;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    /* =============================================
+       Hydrogen
+    ============================================= */
+    #hydrogen {
+      padding: 100px 0;
+      background: #f8fafc;
+      overflow: hidden;
+    }
+    .hydrogen-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .hydrogen-text { order: 1; }
+    .hydrogen-image { order: 2; position: relative; }
+    .hydrogen-image-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, #bfdbfe 0%, transparent 70%);
+      opacity: 0.4;
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+    .hydrogen-image img {
+      position: relative;
+      z-index: 1;
+      border-radius: 20px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.12);
+      width: 100%;
+    }
+    .hydrogen-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 300;
+      color: #1e3a5f;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .hydrogen-body {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 2;
+      margin-bottom: 32px;
+    }
+    .hydrogen-list { margin-bottom: 40px; }
+    .hydrogen-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.95rem;
+      color: #475569;
+      padding: 10px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .hydrogen-list li:first-child { border-top: 1px solid #e2e8f0; }
+    .hydrogen-list .icon {
+      width: 20px;
+      height: 20px;
+      color: #60a5fa;
+      flex-shrink: 0;
+    }
+    .btn-outline {
+      display: inline-block;
+      padding: 12px 32px;
+      border: 1px solid #1e3a5f;
+      color: #1e3a5f;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .btn-outline:hover { background: #1e3a5f; color: #fff; }
+
+    /* =============================================
+       Services
+    ============================================= */
+    #services { padding: 100px 0; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .service-card {
+      padding: 48px 40px;
+      border: 1px solid #f1f5f9;
+      border-radius: 20px;
+      background: #fff;
+      transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+    }
+    .service-card.web:hover  { border-color: #bfdbfe; box-shadow: 0 20px 60px rgba(59,130,246,0.08); }
+    .service-card.food:hover { border-color: #a7f3d0; box-shadow: 0 20px 60px rgba(16,185,129,0.08); }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      transition: transform 0.3s;
+    }
+    .service-card:hover .service-icon { transform: scale(1.1); }
+    .service-icon.web  { background: #eff6ff; color: #3b82f6; }
+    .service-icon.food { background: #ecfdf5; color: #10b981; }
+    .service-icon svg { width: 24px; height: 24px; stroke-width: 1.5; }
+    .service-title {
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: #1e293b;
+      margin-bottom: 14px;
+    }
+    .service-body {
+      font-size: 0.88rem;
+      color: #64748b;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .service-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      border: 1px solid #e2e8f0;
+      color: #94a3b8;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    /* =============================================
+       Porcelarts
+    ============================================= */
+    #porcelarts {
+      padding: 100px 0;
+      background: #fff9f9;
+    }
+    .porcelarts-card {
+      background: #fff;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.08);
+      border: 1px solid #ffe4e6;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Photo gallery grid */
+    .porcelarts-gallery {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      height: 480px;
+    }
+    .porcelarts-gallery .photo-main {
+      grid-row: 1 / 3;
+      overflow: hidden;
+    }
+    .porcelarts-gallery .photo-sub {
+      overflow: hidden;
+    }
+    .porcelarts-gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .porcelarts-gallery img:hover { transform: scale(1.04); }
+    .porcelarts-gallery .photo-sub:first-of-type { border-bottom: 2px solid #fff9f9; }
+    .porcelarts-content {
+      padding: 56px 60px;
+    }
+    .porcelarts-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .porcelarts-label svg { width: 20px; height: 20px; color: #fca5a5; }
+    .porcelarts-label span {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #f87171;
+    }
+    .porcelarts-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      color: #1e293b;
+      letter-spacing: 0.1em;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .porcelarts-heading-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #fca5a5;
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+    .porcelarts-body {
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 2;
+      margin-bottom: 36px;
+    }
+    .porcelarts-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ef4444;
+      border-bottom: 2px solid #fecaca;
+      padding-bottom: 4px;
+      transition: border-color 0.3s, gap 0.3s;
+    }
+    .porcelarts-link:hover { border-color: #ef4444; gap: 14px; }
+    .porcelarts-link svg { width: 16px; height: 16px; }
+
+    /* =============================================
+       Access
+    ============================================= */
+    #access {
+      padding: 100px 0;
+      background: #0f172a;
+      color: #fff;
+    }
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .access-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      margin-bottom: 48px;
+    }
+    .access-item { margin-bottom: 36px; }
+    .access-item-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #60a5fa;
+      margin-bottom: 8px;
+    }
+    .access-item-value {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+    }
+    .access-item-value.small { font-size: 0.85rem; }
+    .access-map {
+      border-radius: 20px;
+      overflow: hidden;
+      background: #1e293b;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .access-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      filter: grayscale(30%) invert(90%) hue-rotate(180deg);
+    }
+    .access-map-overlay {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .access-map-overlay p { font-size: 0.75rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.9); }
+    .access-map-overlay a { font-size: 0.65rem; color: #93c5fd; letter-spacing: 0.1em; }
+    .access-map-overlay a:hover { text-decoration: underline; }
+
+    /* Footer */
+    .footer {
+      margin-top: 80px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .footer p {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* =============================================
+       Responsive
+    ============================================= */
+    @media (max-width: 900px) {
+      .hydrogen-grid,
+      .services-grid,
+      .access-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .hydrogen-text { order: 2; }
+      .hydrogen-image { order: 1; }
+      .porcelarts-gallery {
+        height: 320px;
+      }
+      .porcelarts-content { padding: 40px 32px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .porcelarts-gallery {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+      }
+      .porcelarts-gallery .photo-main {
+        grid-row: auto;
+        height: 260px;
+      }
+      .porcelarts-gallery .photo-sub { height: 180px; }
+      .porcelarts-gallery .photo-sub:nth-child(3) { display: none; }
+      .porcelarts-content { padding: 32px 24px; }
+      #about, #hydrogen .container, #services .container, #porcelarts .container, #access .container {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       Navigation
+  ============================================= -->
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">lycka</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#hydrogen">Hydrogen</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#porcelarts">Porcelarts</a></li>
+        <li><a href="#access">Access</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about"      onclick="closeMobileMenu()">About</a>
+      <a href="#hydrogen"   onclick="closeMobileMenu()">Hydrogen</a>
+      <a href="#services"   onclick="closeMobileMenu()">Services</a>
+      <a href="#porcelarts" onclick="closeMobileMenu()">Porcelarts</a>
+      <a href="#access"     onclick="closeMobileMenu()">Access</a>
+    </div>
+  </nav>
+
+  <!-- =============================================
+       Hero
+  ============================================= -->
+  <section id="hero">
+    <div class="hero-bg">
+      <img
+        src="hero.jpg"
+        alt="水面の抽象イメージ"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">lycka</h1>
+      <p class="hero-subtitle">健やかな体と、心豊かな日常を。</p>
+      <div class="hero-scroll"></div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       About
+  ============================================= -->
+  <section id="about">
+    <p class="about-label">Representative</p>
+    <h2 class="about-name">伊藤 直子<span class="about-name-en">Naoko Ito</span></h2>
+    <div class="about-divider"></div>
+    <p class="about-text">
+      「lycka（リッカ）」はスウェーデン語で「幸せ」を意味します。<br />
+      皆様の日常が、より健やかで、よりクリエイティブな喜びで満たされるよう、<br />
+      多角的なアプローチで事業を展開しています。
+    </p>
+    <p class="about-text">
+      水素風呂を通じた健康管理から、ウェブ制作によるビジネス支援、そして感性を磨くポーセラーツまで。<br />
+      一人ひとりのライフスタイルに寄り添い、確かな価値を届けることが私のミッションです。
+    </p>
+  </section>
+
+  <!-- =============================================
+       Hydrogen
+  ============================================= -->
+  <section id="hydrogen">
+    <div class="container">
+      <div class="section-title">
+        <h2>水素風呂事業</h2>
+        <div class="divider"></div>
+        <p class="subtitle">Hydrogen Health</p>
+      </div>
+      <div class="hydrogen-grid">
+        <div class="hydrogen-text">
+          <h3 class="hydrogen-heading">日々の入浴を、<br />究極のセルフケアへ</h3>
+          <p class="hydrogen-body">
+            私たちの体は日々、酸化というストレスにさらされています。lyckaがご提案する「水素風呂」は、皮膚や呼吸から効率よく水素を吸収し、体全体のコンディションを整える現代の健康習慣です。
+          </p>
+          <ul class="hydrogen-list">
+            <li>
+              <!-- Water drop icon -->
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 5 9.5 5 14a7 7 0 0 0 14 0C19 9.5 12 2 12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              美容と健康の維持に
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 5 9.5 5 14a7 7 0 0 0 14 0C19 9.5 12 2 12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              良質な睡眠をサポート
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 5 9.5 5 14a7 7 0 0 0 14 0C19 9.5 12 2 12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              ご家庭で手軽に水素浴
+            </li>
+            <li>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C12 2 5 9.5 5 14a7 7 0 0 0 14 0C19 9.5 12 2 12 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              アスリートのボディメンテナンス
+            </li>
+          </ul>
+          <a href="#access" class="btn-outline">水素風呂の詳細・お問合せ</a>
+        </div>
+        <div class="hydrogen-image">
+          <div class="hydrogen-image-glow"></div>
+          <img
+            src="bath.jpg"
+            alt="リラックスできるバスタイム"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       Services
+  ============================================= -->
+  <section id="services">
+    <div class="container">
+      <div class="section-title">
+        <h2>事業案内</h2>
+        <div class="divider"></div>
+        <p class="subtitle">Digital &amp; Life</p>
+      </div>
+      <div class="services-grid">
+
+        <!-- Web -->
+        <div class="service-card web">
+          <div class="service-icon web">
+            <!-- Globe icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Web制作・インターネットビジネス</h3>
+          <p class="service-body">
+            個人事業主や中小企業様の事業を後押しする、戦略的なウェブサイトの企画・運営・構築を行います。「伝わる」デザインと「使いやすさ」を両立したビジネス基盤を提供します。
+          </p>
+          <div class="service-tags">
+            <span class="service-tag">サイト企画</span>
+            <span class="service-tag">構築</span>
+            <span class="service-tag">運用支援</span>
+            <span class="service-tag">デジタル活用</span>
+          </div>
+        </div>
+
+        <!-- Food -->
+        <div class="service-card food">
+          <div class="service-icon food">
+            <!-- Apple icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 20.94c1.5 0 4-1.5 4-8.94s-2.5-8.94-4-8.94S8 5.56 8 12s2.5 8.94 4 8.94z"/>
+              <path d="M12 3V1"/>
+              <path d="M10 1c0 0 1 2 2 2s2-2 2-2"/>
+            </svg>
+          </div>
+          <h3 class="service-title">食育事業</h3>
+          <p class="service-body">
+            「体は食べたものでできている」をモットーに、心身の健康を支える正しい食の知識を広める活動を行っています。未来を担う子どもたちの健康と、豊かな食卓作りを支援します。
+          </p>
+          <div class="service-tags">
+            <span class="service-tag">健康アドバイス</span>
+            <span class="service-tag">講座企画</span>
+            <span class="service-tag">ライフスタイル提案</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       Porcelarts
+  ============================================= -->
+  <section id="porcelarts">
+    <div class="container">
+      <div class="porcelarts-card">
+
+        <!-- Photo gallery -->
+        <div class="porcelarts-gallery">
+          <div class="photo-main">
+            <img src="porcelarts1.jpg" alt="花柄の白磁プレート — ポーセラーツ作品" loading="lazy" />
+          </div>
+          <div class="photo-sub">
+            <img src="porcelarts2.jpg" alt="和柄の小皿セット — ポーセラーツ作品" loading="lazy" />
+          </div>
+          <div class="photo-sub">
+            <img src="porcelarts3.jpg" alt="ポーセラーツサロンのティーセット" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="porcelarts-content">
+          <div class="porcelarts-label">
+            <!-- Palette icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/>
+              <circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/>
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+            </svg>
+            <span>Creative Studio</span>
+          </div>
+          <h2 class="porcelarts-heading">ポーセラーツサロン<br />Mahina</h2>
+          <p class="porcelarts-heading-sub">by lycka</p>
+          <p class="porcelarts-body">
+            真っ白な磁器に好きな色や柄をのせ、世界に一つだけのテーブルウェアを作る。<br />
+            Mahina（マヒナ）は、忙しい日常を忘れ、自分自身の感性と向き合う豊かで静かな時間を提供します。
+          </p>
+          <a href="https://lycka.work/greeting/" target="_blank" rel="noopener noreferrer" class="porcelarts-link">
+            Salon Site Visit
+            <!-- ChevronRight icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6"/></svg>
+            <!-- ExternalLink icon -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       Access
+  ============================================= -->
+  <section id="access">
+    <div class="container">
+      <div class="access-grid">
+
+        <div>
+          <p class="access-logo">lycka</p>
+
+          <div class="access-item">
+            <p class="access-item-label">Representative</p>
+            <p class="access-item-value">伊藤 直子 / Naoko Ito</p>
+          </div>
+
+          <div class="access-item">
+            <p class="access-item-label">Location</p>
+            <p class="access-item-value">宮城県富谷市成田3-3-3</p>
+          </div>
+
+          <div class="access-item">
+            <p class="access-item-label">Business</p>
+            <p class="access-item-value small">
+              水素風呂の営業・販売 / ウェブサイトの企画・運営・構築<br />
+              インターネットビジネス全般 / ポーセラーツ事業全般 / 食育事業
+            </p>
+          </div>
+        </div>
+
+        <div class="access-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3089.0!2d140.8900!3d38.4100!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5f8a4a0e0e0e0e0e%3A0x0!2z5a6J5Z-O55yM5a-M6LC35biC5oiQ55Sw77yT5LiB55uu77yT!5e0!3m2!1sja!2sjp!4v1700000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="lycka 所在地マップ"
+          ></iframe>
+          <div class="access-map-overlay">
+            <p>Tomiya City, Miyagi</p>
+            <a href="https://maps.google.com/?q=宮城県富谷市成田3-3-3" target="_blank" rel="noopener noreferrer">Google Maps で見る →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <p>&copy; <span id="year"></span> lycka. All Rights Reserved.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       JavaScript
+  ============================================= -->
+  <script>
+    // --- Year ---
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- Scroll nav ---
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // --- Hamburger ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobileMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    }
+
+    // --- Scroll-in animation ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(
+      '#about, .hydrogen-text, .hydrogen-image, .service-card, .porcelarts-card, .access-grid > div'
+    ).forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      observer.observe(el);
+    });
+
+    // Add visible class styles
+    const style = document.createElement('style');
+    style.textContent = '.visible { opacity: 1 !important; transform: translateY(0) !important; }';
+    document.head.appendChild(style);
+  </script>
+
+</body>
+</html>
